@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+# from typing import Optional
 
 
 app = FastAPI()
@@ -74,3 +75,32 @@ def get_task_title(task_title : str):
         status_code = 404,
         detail = "Task not found"
     )
+
+
+@app.get("/about")
+def about():
+    return {
+        "project_name" : "Task Management API",
+        "version" : "1.0.0"
+    }
+
+@app.get("/health")
+def health_check():
+    return {
+        "status" : "healthy"
+    }
+
+@app.get("/greet/{name}")
+def greet_person(name : str):
+    return {
+        "message" : f"Hi {name}, Welcome to FastAPI"
+    }
+
+
+@app.get("/search")
+def search(keyword : str, category : str | None = None):
+    return {
+        "keyword" : f"searching for {keyword}",
+        "category" : category
+    }
+    
